@@ -11,5 +11,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Giraffe" Version="6.0.0" />
+    <PackageReference Include="Giraffe.ViewEngine" Version="2.0.0-alpha-1" />
+    <PackageReference Include="Markdig" Version="0.30.*" />
+    <PackageReference Include="NUglify" Version="1.19.*" />
   </ItemGroup>
 </Project>

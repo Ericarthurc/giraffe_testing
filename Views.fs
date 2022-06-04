@@ -1,6 +1,8 @@
 namespace DashingOwl
 
 module Views =
+    open System
+    open System.Net
     open Giraffe.ViewEngine
 
     let partial =
