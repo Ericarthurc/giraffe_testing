@@ -5,5 +5,9 @@ module HttpHandlers =
     open Microsoft.Net.Http.Headers
     open Giraffe
 
-    let handlerTest (id: string) : HttpHandler =
-        fun (next: HttpFunc) (ctx: HttpContext) -> (id |> Views.master |> htmlView) next ctx
+    let handlerTest (blog: string) : HttpHandler =
+        fun (next: HttpFunc) (ctx: HttpContext) ->
+            let fileContent = Parser.getFileContent (blog)
+            let meta = Parser.getMetaFromFileContent (fileContent)
+            let post = Parser.getHTMLFromMarkdown (fst fileContent)
+            (post |> Views.master |> htmlView) next ctx
