@@ -11,4 +11,7 @@ module Router =
         [ GET [ route "/" (text "Hello World")
                 route "/blog" (text "Blog here!")
 
-                routef "/blog/%s" HttpHandlers.handlerTest ] ]
+                routef "/blog/%s" HttpHandlers.handlerTest
+
+                route "/series" (text "Series")
+                route "/about" (text "About") ] ]

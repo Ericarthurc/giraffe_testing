@@ -2,11 +2,13 @@ namespace DashingOwl
 
 module Program =
     open System
+    open System.IO
     open Microsoft.AspNetCore.Builder
     open Microsoft.AspNetCore.Hosting
     open Microsoft.Extensions.Hosting
     open Microsoft.Extensions.Logging
     open Microsoft.Extensions.DependencyInjection
+    open Microsoft.Extensions.FileProviders
     open Giraffe
     open Giraffe.EndpointRouting
 
@@ -14,7 +16,20 @@ module Program =
 
     let configureApp (app: IApplicationBuilder) =
         app
-            .UseStaticFiles()
+            .UseStaticFiles(
+                StaticFileOptions(
+                    FileProvider =
+                        new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Public/root")),
+                    RequestPath = ""
+                )
+            )
+            .UseStaticFiles(
+                StaticFileOptions(
+                    FileProvider =
+                        new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Public/static")),
+                    RequestPath = "/public"
+                )
+            )
             .UseRouting()
             .UseGiraffe(Router.endpoints)
         |> ignore
@@ -25,6 +40,7 @@ module Program =
             .CreateDefaultBuilder()
             .ConfigureWebHostDefaults(fun webHostBuilder ->
                 webHostBuilder
+                    .UseUrls("http://0.0.0.0:1234")
                     .UseWebRoot("public")
                     .Configure(configureApp)
                     .ConfigureServices(configureServices)

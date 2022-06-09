@@ -1,17 +1,17 @@
-self.addEventListener("install", function (event) {
+self.addEventListener('install', function (event) {
   event.waitUntil(preLoad());
 });
 
-const cacheName = "cache-0.0.1";
+const cacheName = 'cache-0.0.1';
 var preLoad = async function () {
   const cache = await caches.open(cacheName);
-  return await cache.addAll(["/", "/blog", "/series"]);
+  return await cache.addAll(['/', '/blog', '/series']);
 };
 
-self.addEventListener("fetch", function (event) {
+self.addEventListener('fetch', function (event) {
   if (
-    event.request.cache === "only-if-cached" &&
-    event.request.mode !== "same-origin"
+    event.request.cache === 'only-if-cached' &&
+    event.request.mode !== 'same-origin'
   ) {
     return;
   }
@@ -45,7 +45,7 @@ var returnFromCache = async function (request) {
   const cache = await caches.open(cacheName);
   const matching = await cache.match(request);
   if (!matching || matching.status == 404) {
-    return cache.match("offline.html");
+    return cache.match('offline.html');
   } else {
     return matching;
   }
